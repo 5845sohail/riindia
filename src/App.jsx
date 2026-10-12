@@ -503,9 +503,9 @@ function App() {
           </div>
           <div>
             <span>CONNECT</span>
-            <a href="#top">LinkedIn</a>
-            <a href="#top">Instagram</a>
-            <a href="#top">Research Journal</a>
+            <a href="https://www.linkedin.com/company/robotics-institute-of-india1/">LinkedIn</a>
+            <a href="https://www.instagram.com/roboticsinstituteofindia">Instagram</a>
+            {/* <a href="#top">Research Journal</a> */}
           </div>
           <div>
             <span>LEGAL</span>
