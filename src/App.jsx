@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import Lenis from "lenis";
 import "./styles.css";
+import "./polish.css";
 
 const programs = [
   [
@@ -99,6 +101,22 @@ const Logo = () => (
     </div>
   </a>
 );
+function useGhostScroll() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    const lenis = new Lenis({ duration: 1.15, lerp: 0.075, smoothWheel: true, wheelMultiplier: 0.88 });
+    let frame;
+    const raf = (time) => { lenis.raf(time); frame = requestAnimationFrame(raf); };
+    frame = requestAnimationFrame(raf);
+    document.documentElement.classList.add("ghost-ready");
+    const sections = [...document.querySelectorAll("main > section:not(.hero), .footer")];
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) { entry.target.classList.add("ghost-visible"); observer.unobserve(entry.target); }
+    }), { threshold: .07, rootMargin: "0px 0px -6% 0px" });
+    sections.forEach((section) => observer.observe(section));
+    return () => { cancelAnimationFrame(frame); lenis.destroy(); observer.disconnect(); document.documentElement.classList.remove("ghost-ready"); };
+  }, []);
+}
 function CountMetric({ value, prefix = "", suffix = "", label }) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -119,18 +137,26 @@ function CountMetric({ value, prefix = "", suffix = "", label }) {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [activeHero, setActiveHero] = useState(0);
   const [activeDmps, setActiveDmps] = useState(0);
   const [plannerStage, setPlannerStage] = useState(1);
   const [selectedModules, setSelectedModules] = useState(["Assembly & Fabrication", "Coding & AI"]);
   const [quoteForm, setQuoteForm] = useState({ name: "", organisation: "", mobile: "", address: "" });
   const [openFaq, setOpenFaq] = useState(0);
+  useGhostScroll();
   useEffect(() => {
     document.body.style.overflow = menuOpen || modalOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [menuOpen, modalOpen]);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   useEffect(() => {
     const interval = window.setInterval(() => {
       setActiveHero((current) => (current + 1) % heroSlides.length);
@@ -164,7 +190,7 @@ function App() {
   return (
     <div className="app" id="top">
       <div className="noise" aria-hidden="true" />
-      <header className="nav-wrap">
+      <header className={`nav-wrap ${scrolled ? "is-scrolled" : ""}`}>
         <nav className="nav shell" aria-label="Main navigation">
           <Logo />
           <div className="nav-links">
