@@ -94,7 +94,9 @@ const Logo = () => (
     href="#top"
     aria-label="Robotics Institute of India home"
   >
-    <img src="/assets/brand/logo.png" alt="Robotics Institute of India" />
+   <div className="brand-glow-wrapper">
+      <img src="/assets/brand/logo.png" alt="Robotics Institute of India" />
+    </div>
   </a>
 );
 function CountMetric({ value, prefix = "", suffix = "", label }) {
