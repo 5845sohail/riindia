@@ -93,7 +93,7 @@ const Arrow = () => (
 const Logo = () => (
   <a
     className="brand"
-    href="#top"
+    href="https://www.riindia.in/"
     aria-label="Robotics Institute of India home"
   >
    <div className="brand-glow-wrapper">
