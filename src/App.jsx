@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+import Typewriter from "./Typewriter";
 import "./styles.css";
 import "./polish.css";
+import "./motion.css";
+
+const headingWords = ["robotics.", "AI.", "innovation."];
+const subheadingWords = ["Innovation.", "Intelligence.", "Possibility."];
 
 const programs = [
   [
@@ -85,11 +91,6 @@ const faqs = [
   ["What competitions do students get prepared for?", "The environment is designed around applied projects, prototypes, and innovation challenges. The right competition pathway is selected with the school based on its students and goals."],
   ["Who covers lab maintenance and updates?", "RII defines the support scope during the quotation stage, so the school has clarity on setup, activation, faculty support, and the ongoing care of the environment."],
 ];
-const Arrow = () => (
-  <span className="arrow" aria-hidden="true">
-    ↗
-  </span>
-);
 const Logo = () => (
   <a
     className="brand"
@@ -103,18 +104,36 @@ const Logo = () => (
 );
 function useGhostScroll() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
-    const lenis = new Lenis({ duration: 1.15, lerp: 0.075, smoothWheel: true, wheelMultiplier: 0.88 });
+    const lenis = new Lenis({ duration: 1.15, lerp: 0.075, smoothWheel: true, wheelMultiplier: 0.88, anchors: { offset: -100 }, respectReducedMotion: false });
     let frame;
     const raf = (time) => { lenis.raf(time); frame = requestAnimationFrame(raf); };
     frame = requestAnimationFrame(raf);
+    const targets = [...document.querySelectorAll([
+      ".proof > div", ".metrics > div", ".section-intro", ".program-card",
+      ".private-section > div", ".planner-section > .section-label", ".planner-section > h2",
+      ".planner-intro", ".planner-tabs", ".planner-body", ".research-grid > div",
+      ".collaboration > div", ".faq-section > .section-label", ".faq-section > h2",
+      ".faq-intro", ".faq-item", ".closing > :not(.closing-glow)", ".footer-grid > div", ".footer-bottom",
+    ].join(","))];
+    targets.forEach((target) => target.classList.add("ghost-reveal"));
     document.documentElement.classList.add("ghost-ready");
-    const sections = [...document.querySelectorAll("main > section:not(.hero), .footer")];
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (entry.isIntersecting) { entry.target.classList.add("ghost-visible"); observer.unobserve(entry.target); }
-    }), { threshold: .07, rootMargin: "0px 0px -6% 0px" });
-    sections.forEach((section) => observer.observe(section));
-    return () => { cancelAnimationFrame(frame); lenis.destroy(); observer.disconnect(); document.documentElement.classList.remove("ghost-ready"); };
+    }), { threshold: 0, rootMargin: "0px" });
+    targets.forEach((target) => observer.observe(target));
+    const onFocus = (event) => {
+      const target = event.target.closest(".ghost-reveal");
+      if (target) { target.classList.add("ghost-visible"); observer.unobserve(target); }
+    };
+    document.addEventListener("focusin", onFocus);
+    return () => {
+      cancelAnimationFrame(frame);
+      lenis.destroy();
+      observer.disconnect();
+      document.removeEventListener("focusin", onFocus);
+      document.documentElement.classList.remove("ghost-ready");
+      targets.forEach((target) => target.classList.remove("ghost-reveal", "ghost-visible"));
+    };
   }, []);
 }
 function CountMetric({ value, prefix = "", suffix = "", label }) {
@@ -200,7 +219,7 @@ function App() {
             <a href="#collaboration">Collaboration</a>
           </div>
           <button className="nav-cta" onClick={openInquiry}>
-            Inquire <Arrow />
+            Get in touch
           </button>
           <button
             className="menu-toggle"
@@ -228,22 +247,22 @@ function App() {
             </button>
           </div>
           <a href="#programs" onClick={closeMenu}>
-            Five Pillars <Arrow />
+            Five Pillars
           </a>
           <a href="#composite-lab" onClick={closeMenu}>
-            Composite Lab <Arrow />
+            Composite Lab
           </a>
           <a href="#research" onClick={closeMenu}>
-            Research <Arrow />
+            Research
           </a>
           <a href="#collaboration" onClick={closeMenu}>
-            Collaboration <Arrow />
+            Collaboration
           </a>
           <button
             className="primary-button mobile-inquire"
             onClick={openInquiry}
           >
-            Request a quotation <Arrow />
+            Get a quote
           </button>
         </div>
       </div>
@@ -256,10 +275,10 @@ function App() {
             <div className="exclusive-badge">
               ✦ &nbsp; END-TO-END SCHOOL TRANSFORMATION
             </div><br/><br/>
-            <h1>{heroSlides[activeHero].title}</h1>
+            <h1>Curating the future <em>of <Typewriter words={headingWords} label="robotics, AI, and innovation" /></em></h1>
             <br/>
             <p className="hero-subtitle">
-              {heroSlides[activeHero].subtitle}
+              Exclusivity. <Typewriter words={subheadingWords} label="Innovation, Intelligence, and Possibility" speed={100} /> Transforming tomorrow.
             </p>
             <br/><br/>
             <p className="hero-text">
@@ -267,10 +286,10 @@ function App() {
             </p>
             <div className="hero-actions">
               <a className="primary-button" href="#programs">
-                Explore the RII model <Arrow />
+                See how we help
               </a>
               <button className="secondary-button" onClick={openInquiry}>
-                Request a quotation <Arrow />
+                Get a quote
               </button>
             </div>
             <div className="trust-line">
@@ -368,7 +387,7 @@ function App() {
                   <h3>{title}</h3>
                   <p>{copy}</p>
                   <a href="#composite-lab">
-                    Explore this pillar <Arrow />
+                    Learn more
                   </a>
                 </article>
               ))}
@@ -399,7 +418,7 @@ function App() {
               <li>Residential faculty and expert activation support</li>
             </ul>
             <button className="text-button" onClick={openInquiry}>
-              Plan your composite lab <Arrow />
+              Let’s plan your lab
             </button>
           </div>
         </section>
@@ -422,8 +441,8 @@ function App() {
             </div>
             <div className="planner-output">
               <div className="planner-output-cards"><div><span>SPACE NEEDED</span><strong>{labStages[plannerStage].space}</strong></div><div><span>ACTIVE MODULES</span><strong>{selectedModules.length} Selected</strong></div><div><span>NEP COMPLIANCE</span><strong>2020 Align</strong></div><div><span>DEPLOYED FACULTY</span><strong>{labStages[plannerStage].faculty}</strong></div></div>
-              <div className="blueprint"><div className="blueprint-head"><span>↗ CONCEPTUAL LAB BLUEPRINT</span><small>Dynamic spatial model</small></div><div className="zone-grid"><div><span>ZONE A</span><strong>Assembly & Fabrication</strong><small>Hands-on workbench</small></div><div><span>ZONE B</span><strong>Coding & AI</strong><small>Computing & intelligence</small></div><div><span>ZONE C</span><strong>Robotics</strong><small>Build, test, refine</small></div><div><span>ZONE D</span><strong>Showcase</strong><small>Projects & prototypes</small></div></div></div>
-              <button className="primary-button planner-quote" onClick={openInquiry}>Request this lab quotation <Arrow /></button>
+              <div className="blueprint"><div className="blueprint-head"><span>YOUR LAB AT A GLANCE</span><small>Suggested layout</small></div><div className="zone-grid"><div><span>ZONE A</span><strong>Assembly & Fabrication</strong><small>Hands-on workbench</small></div><div><span>ZONE B</span><strong>Coding & AI</strong><small>Computing & intelligence</small></div><div><span>ZONE C</span><strong>Robotics</strong><small>Build, test, refine</small></div><div><span>ZONE D</span><strong>Showcase</strong><small>Projects & prototypes</small></div></div></div>
+              <button className="primary-button planner-quote" onClick={openInquiry}>Get a quote for this lab</button>
             </div>
           </div>
         </section>
@@ -480,7 +499,7 @@ function App() {
             Start with a clear conversation about your space, your goals, and the lab your institution is ready to build.
           </p>
           <button className="primary-button" onClick={openInquiry}>
-            Request a quotation <Arrow />
+            Get a quote
           </button>
         </section>
       </main>
@@ -545,7 +564,7 @@ function App() {
               <label>Company / School name<input required value={quoteForm.organisation} onChange={(event) => setQuoteForm({ ...quoteForm, organisation: event.target.value })} placeholder="Institution name" /></label>
               <label>Mobile number<input required type="tel" inputMode="tel" value={quoteForm.mobile} onChange={(event) => setQuoteForm({ ...quoteForm, mobile: event.target.value })} placeholder="Your WhatsApp number" /></label>
               <label>Address<textarea required value={quoteForm.address} onChange={(event) => setQuoteForm({ ...quoteForm, address: event.target.value })} placeholder="City, state, and school address" rows="3" /></label>
-              <button className="primary-button" type="submit">Submit to Get Quote <Arrow /></button>
+              <button className="primary-button" type="submit">Submit to Get Quote</button>
             </form>
           </section>
         </div>

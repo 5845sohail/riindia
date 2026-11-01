@@ -1,4 +1,4 @@
-/* Final visual polish: loaded after styles.css to ensure consistent precedence. */
+
 .nav-wrap {
   position: absolute;
   padding-top: 18px;
@@ -81,16 +81,18 @@
   color: #102d73 !important
 }
 
-.ghost-ready main>section:not(.hero),
-.ghost-ready .footer {
+html.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.ghost-ready .ghost-reveal {
   opacity: 0;
   transform: translateY(34px) scale(.992);
   filter: blur(5px);
-  transition: opacity .85s cubic-bezier(.16, 1, .3, 1), transform .95s cubic-bezier(.16, 1, .3, 1), filter .75s ease
+  transition: opacity .85s cubic-bezier(.16, 1, .3, 1), transform .95s cubic-bezier(.16, 1, .3, 1), filter .75s ease !important
 }
 
-.ghost-ready main>section:not(.hero).ghost-visible,
-.ghost-ready .footer.ghost-visible {
+.ghost-ready .ghost-reveal.ghost-visible {
   opacity: 1;
   transform: none;
   filter: none
@@ -197,16 +199,6 @@
   }
 }
 
-@media(prefers-reduced-motion:reduce) {
-
-  .ghost-ready main>section:not(.hero),
-  .ghost-ready .footer {
-    opacity: 1;
-    transform: none;
-    filter: none;
-    transition: none
-  }
-}
 
 @media(max-width:850px) {
   .hero h1 {
