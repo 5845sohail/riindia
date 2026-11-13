@@ -1,27 +1,179 @@
 /* Persistent motion is isolated from the image carousel's cross-fade transforms. */
-.typewriter { position: relative; display: inline-grid; vertical-align: bottom; white-space: nowrap; }
-.typewriter-reserve, .typewriter-text { grid-area: 1 / 1; }
-.typewriter-reserve { visibility: hidden; }
-.typewriter-text { position: relative; justify-self: start; }
-.typewriter-caret { display: inline-block; width: .045em; height: .85em; margin-left: .06em; vertical-align: -.025em; background: currentColor; animation: riiCaret 1s step-end infinite; }
-.hero { perspective: 1400px; }
-.hero-visual .hero-image { transition: opacity 1.4s cubic-bezier(.4,0,.2,1) !important; transform: none; }
-.collaboration-media > img { transition: opacity 1.4s cubic-bezier(.4,0,.2,1) !important; transform: none; }
-.hero-visual .hero-image.is-active, .collaboration-media > img.is-active { transform: none; }
-.hero-visual { transform-style: preserve-3d; animation: riiDepth 11s ease-in-out infinite; will-change: transform; }
-.hero-visual .visual-orbit { animation: riiOrbit 20s linear infinite; transform-origin: center; }
-.hero-visual .orbit-b { animation-name: riiOrbitReverse; animation-duration: 28s; }
-.hero-visual .visual-orbit::after { content: ""; position: absolute; top: 10%; left: 17%; width: 7px; height: 7px; border-radius: 50%; background: #648cff; box-shadow: 0 0 18px rgba(76,119,255,.7); }
-.hero-visual .hero-card { animation: riiFloat 6s ease-in-out infinite; }
-.hero-visual .scan-line { animation: riiScan 7s ease-in-out infinite; }
-@keyframes riiCaret { 0%, 45% { opacity: 1; } 46%, 100% { opacity: 0; } }
-@keyframes riiDepth { 0%, 100% { transform: rotateY(-4deg) rotateX(2deg) translateY(0); } 50% { transform: rotateY(4deg) rotateX(-2deg) translateY(-9px); } }
-@keyframes riiOrbit { from { transform: rotateZ(0deg) rotateX(22deg); } to { transform: rotateZ(360deg) rotateX(22deg); } }
-@keyframes riiOrbitReverse { from { transform: rotateZ(360deg) rotateY(18deg); } to { transform: rotateZ(0deg) rotateY(18deg); } }
-@keyframes riiFloat { 0%, 100% { transform: translate3d(0,0,24px); } 50% { transform: translate3d(0,-8px,36px); } }
-@keyframes riiScan { 0%, 100% { transform: translateY(-75px); opacity: .15; } 50% { transform: translateY(95px); opacity: .5; } }
+.typewriter {
+  position: relative;
+  display: inline-grid;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.typewriter-reserve,
+.typewriter-text {
+  grid-area: 1 / 1;
+}
+
+.typewriter-reserve {
+  visibility: hidden;
+}
+
+.typewriter-text {
+  position: relative;
+  justify-self: start;
+}
+
+.typewriter-caret {
+  display: inline-block;
+  width: .045em;
+  height: .85em;
+  margin-left: .06em;
+  vertical-align: -.025em;
+  background: currentColor;
+  animation: riiCaret 1s step-end infinite;
+}
+
+.hero {
+  perspective: 1400px;
+}
+
+.hero-visual .hero-image {
+  transition: opacity 1.4s cubic-bezier(.4, 0, .2, 1) !important;
+  transform: none;
+}
+
+.collaboration-media>img {
+  transition: opacity 1.4s cubic-bezier(.4, 0, .2, 1) !important;
+  transform: none;
+}
+
+.hero-visual .hero-image.is-active,
+.collaboration-media>img.is-active {
+  transform: none;
+}
+
+.hero-visual {
+  transform-style: preserve-3d;
+  animation: riiDepth 11s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-visual .visual-orbit {
+  animation: riiOrbit 20s linear infinite;
+  transform-origin: center;
+}
+
+.hero-visual .orbit-b {
+  animation-name: riiOrbitReverse;
+  animation-duration: 28s;
+}
+
+.hero-visual .visual-orbit::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 17%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #648cff;
+  box-shadow: 0 0 18px rgba(76, 119, 255, .7);
+}
+
+.hero-visual .hero-card {
+  animation: riiFloat 6s ease-in-out infinite;
+}
+
+.hero-visual .scan-line {
+  animation: riiScan 7s ease-in-out infinite;
+}
+
+@keyframes riiCaret {
+
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes riiDepth {
+
+  0%,
+  100% {
+    transform: rotateY(-4deg) rotateX(2deg) translateY(0);
+  }
+
+  50% {
+    transform: rotateY(4deg) rotateX(-2deg) translateY(-9px);
+  }
+}
+
+@keyframes riiOrbit {
+  from {
+    transform: rotateZ(0deg) rotateX(22deg);
+  }
+
+  to {
+    transform: rotateZ(360deg) rotateX(22deg);
+  }
+}
+
+@keyframes riiOrbitReverse {
+  from {
+    transform: rotateZ(360deg) rotateY(18deg);
+  }
+
+  to {
+    transform: rotateZ(0deg) rotateY(18deg);
+  }
+}
+
+@keyframes riiFloat {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 24px);
+  }
+
+  50% {
+    transform: translate3d(0, -8px, 36px);
+  }
+}
+
+@keyframes riiScan {
+
+  0%,
+  100% {
+    transform: translateY(-75px);
+    opacity: .15;
+  }
+
+  50% {
+    transform: translateY(95px);
+    opacity: .5;
+  }
+}
+
 @media (max-width:850px) {
-  .hero-visual { animation-name: riiMobileDepth; }
-  .hero h1 .typewriter { font-size: .92em; }
-  @keyframes riiMobileDepth { 0%, 100% { transform: perspective(1100px) scale(1.025) rotateY(-1deg); } 50% { transform: perspective(1100px) scale(1.055) rotateY(1deg); } }
+  .hero-visual {
+    animation-name: riiMobileDepth;
+  }
+
+  .hero h1 .typewriter {
+    font-size: .92em;
+  }
+
+  @keyframes riiMobileDepth {
+
+    0%,
+    100% {
+      transform: perspective(1100px) scale(1.025) rotateY(-1deg);
+    }
+
+    50% {
+      transform: perspective(1100px) scale(1.055) rotateY(1deg);
+    }
+  }
 }

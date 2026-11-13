@@ -1,0 +1,236 @@
+.program-card.glass-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.pillar-photo { position: relative; margin: 0; aspect-ratio: 1.43; overflow: hidden; background: #eaf1ff; }
+.pillar-photo img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85); transition: transform 1s ease !important; }
+.program-card:hover .pillar-photo img { transform: scale(1.04); }
+.pillar-photo figcaption { position: absolute; bottom: 8px; left: 8px; right: 8px; width: fit-content; padding: 3px 6px; border-radius: 4px; background: rgba(255,255,255,.92); line-height: 1.35; }
+.program-card .pillar-photo figcaption a { display: block; margin: 0; font-size: 7px; letter-spacing: 0; line-height: 1.35; }
+.pillar-copy { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+.program-card .pillar-copy h3 { margin-top: 20px; }
+.program-card .pillar-copy > a { align-self: flex-start; margin-top: auto; padding-top: 18px; }
+@media(max-width:850px) { .pillar-photo { aspect-ratio: 1.75; }.pillar-copy { padding: 24px; }.program-card .pillar-photo figcaption a { font-size: 9px; } }
+
+.composite-section {
+  padding: 112px 0 88px;
+  scroll-margin-top: 110px;
+}
+
+.composite-intro {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 70px;
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.composite-intro h2 {
+  margin: 16px 0 0;
+  color: #10213f;
+  font-size: clamp(34px, 3.8vw, 54px);
+  letter-spacing: -.055em;
+  line-height: 1.14;
+}
+
+.composite-intro h2 em {
+  color: #3357ae;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.composite-intro>p {
+  margin: 0 0 4px;
+  color: #526780;
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.composite-services {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.lab-service {
+  overflow: hidden;
+  background: rgba(255, 255, 255, .9);
+  border: 1px solid rgba(30, 64, 175, .13);
+  border-radius: 18px;
+  box-shadow: 0 14px 36px rgba(27, 61, 121, .06);
+}
+
+.lab-service figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 1.43;
+  background: #e9f0fb;
+}
+
+.lab-service figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.85);
+  transition: transform 1.2s ease !important;
+}
+
+.lab-service:hover figure img {
+  transform: scale(1.035);
+}
+
+.lab-service figcaption {
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  max-width: calc(100% - 18px);
+  padding: 3px 7px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, .9);
+  color: #23467c;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.lab-service figcaption a:hover {
+  text-decoration: underline;
+}
+
+.lab-service-copy {
+  padding: 27px 25px 25px;
+}
+
+.lab-service-step {
+  color: #936d31;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .12em;
+}
+
+.lab-service h3 {
+  color: #173568;
+  margin: 12px 0 14px;
+  font-size: 23px;
+  line-height: 1.25;
+  letter-spacing: -.04em;
+}
+
+.lab-service p {
+  color: #526780;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.lab-service ul {
+  list-style: none;
+  padding: 17px 0 0;
+  margin: 21px 0 0;
+  border-top: 1px solid rgba(30, 64, 175, .12);
+}
+
+.lab-service li {
+  position: relative;
+  padding: 6px 0 6px 14px;
+  color: #314c70;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.lab-service li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 13px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #4269cf;
+}
+
+.composite-outcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 28px;
+  padding: 27px 30px;
+  border-radius: 14px;
+  border: 1px solid rgba(30, 64, 175, .13);
+  background: linear-gradient(115deg, #edf3ff, #f9fbff);
+}
+
+.composite-outcome strong {
+  color: #173568;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.composite-outcome p {
+  max-width: 620px;
+  margin: 6px 0 0;
+  color: #526780;
+  font-size: 12px;
+}
+
+.composite-outcome button {
+  flex-shrink: 0;
+}
+
+@media(max-width:1050px) {
+  .composite-services {
+    gap: 14px;
+  }
+
+  .lab-service-copy {
+    padding: 23px 18px;
+  }
+
+  .lab-service h3 {
+    font-size: 21px;
+  }
+}
+
+@media(max-width:850px) {
+  .composite-section {
+    padding: 76px 0 35px;
+  }
+
+  .composite-intro {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 28px;
+  }
+
+  .composite-intro h2 {
+    font-size: clamp(32px, 7.7vw, 48px);
+  }
+
+  .composite-services {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .lab-service-copy {
+    padding: 25px;
+  }
+
+  .lab-service h3 {
+    font-size: 25px;
+  }
+
+  .lab-service figure {
+    aspect-ratio: 1.65;
+  }
+
+  .composite-outcome {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 25px;
+    gap: 22px;
+  }
+
+  .composite-outcome button {
+    width: 100%;
+    justify-content: center;
+  }
+}
